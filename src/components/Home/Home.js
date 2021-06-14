@@ -32,7 +32,7 @@ function Home() {
               <Items />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Form />
+              {/* <Form /> */}
             </Grid>
           </Grid>
         </Container>

@@ -34,8 +34,7 @@ function IndividualForm({ item }) {
   });
 
   const handleOpen = () => {
-    if (orderData.size != "" && orderData.color != "") {
-      setMessage({
+    if(item.name == "Nano Sports Quick Drying Towel" && orderData.color != ""){      setMessage({
         ...message,
         msg: (
           <div
@@ -55,7 +54,7 @@ function IndividualForm({ item }) {
         autoClose: 1000,
         position: { vertical: "bottom", horizontal: "center" },
       });
-    } else {
+    } else if (orderData.size != "" && orderData.color != "") {
       setMessage({
         ...message,
         msg: (
@@ -70,13 +69,34 @@ function IndividualForm({ item }) {
               borderRadius: 5,
             }}
           >
-            Morate izabrati boju i veličinu artikla!
+            <div>Uspješno ste dodali artikal u korpu!</div>
           </p>
         ),
         autoClose: 2000,
         position: { vertical: "bottom", horizontal: "center" },
       });
-    }
+    } else  {
+      setMessage({
+        ...message,
+        msg: (
+          <p
+            style={{
+              background: "#3f4042",
+              color: "white",
+              paddingTop: 20,
+              paddingBottom: 20,
+              paddingLeft: 80,
+              paddingRight: 80,
+              borderRadius: 5,
+            }}
+          >
+            <div>Morate izabrati boju i veličinu artikla!</div>
+          </p>
+        ),
+        autoClose: 2000,
+        position: { vertical: "bottom", horizontal: "center" },
+      });
+     }
     setOpen(true);
   };
 
@@ -88,7 +108,8 @@ function IndividualForm({ item }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (orderData.size != "" && orderData.color != "") {
+    console.log(orderData)
+    if(item.name == "Nano Sports Quick Drying Towel" && orderData.color != ""){
       try {
         dispatch(addToBasket(orderData));
         setOrderData({
@@ -97,6 +118,25 @@ function IndividualForm({ item }) {
           size: "",
           color: "",
           price: item.price,
+          discount: item.discount
+        });
+        clearStyle();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    else if (orderData.size != "" && orderData.color != "") {
+      try {
+        dispatch(addToBasket(orderData));
+        setOrderData({
+          name: item.name,
+          image: item.selectedFile[0],
+          size: "",
+          color: "",
+          price: item.price,
+          discount: item.discount
+
         });
         clearStyle();
       } catch (error) {
@@ -148,7 +188,7 @@ function IndividualForm({ item }) {
   return (
     <div>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <h1 style={{ marginTop: 0, marginBottom: 10 }}>{item.name}</h1>
+        <h2 style={{ marginTop: 0, marginBottom: 10 }}>{item.name}</h2>
         {item.discount > 0 ? (
           <h3 style={{ marginTop: 0, marginBottom: 7 }}> -{item.discount}%</h3>
         ) : (
@@ -175,27 +215,31 @@ function IndividualForm({ item }) {
         </p>
 
         <div style={{ marginBottom: 30 }}>
-          {item.sizes.map((size, indx) => (
-            <span
-              style={{
-                marginRight: 10,
-                paddingTop: 5,
-                paddingLeft: 10,
-                paddingRight: 10,
-                paddingBottom: 5,
-                background: "white",
-                fontSize: 15,
-                borderBottom: "1px solid #031292",
-              }}
-              id={"size" + indx}
-              onClick={(e) => {
-                setOrderData({ ...orderData, size: size });
-                setSizeStyle(e, item.sizes.length);
-              }}
-            >
-              {size}
-            </span>
-          ))}
+        {item.name != "Nano Sports Quick Drying Towel" ?
+          <div>
+            { item.sizes.map((size, indx) => (
+              <span
+                style={{
+                  marginRight: 10,
+                  paddingTop: 5,
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  paddingBottom: 5,
+                  background: "white",
+                  fontSize: 15,
+                  borderBottom: "1px solid #031292",
+                }}
+                id={"size" + indx}
+                onClick={(e) => {
+                  setOrderData({ ...orderData, size: size });
+                  setSizeStyle(e, item.sizes.length);
+                }}
+              >
+                {size}
+              </span>
+            ))}
+          </div> : " " }
+          
         </div>
         <div>
           {item.colors.map((color, indx) => (

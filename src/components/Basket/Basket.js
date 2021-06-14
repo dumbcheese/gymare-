@@ -37,8 +37,7 @@ function Basket() {
     e.preventDefault();
     if (
       purchaseDetails.name != "" &&
-      purchaseDetails.number != "" &&
-      purchaseDetails.email != ""
+      purchaseDetails.number != "" 
     ) {
       dispatch(checkout(purchaseDetails));
       clear();
@@ -191,7 +190,7 @@ function Basket() {
                 borderBottom: "2px solid #ebebeb",
               }}
             >
-              Ukupna cijena: {purchaseDetails.price}
+              Ukupna cijena: {purchaseDetails.price}.00KM
             </h1>
             <TextField
               required
@@ -222,7 +221,6 @@ function Basket() {
               }
             />
             <TextField
-              required
               name="number"
               variant="outlined"
               label="Email"
