@@ -17,14 +17,28 @@ function Basket() {
 
   const basketItems = useSelector((state) => state.purchases);
   var item = null;
+  const itemsWithoutImage=[];
 
   const [purchaseDetails, setPurchaseDetails] = useState({
     name: "",
     number: "",
     email: "",
     price: 0,
-    items: basketItems,
+    items: itemsWithoutImage,
   });
+
+  useEffect(()=>{
+    basketItems.map((item, index) =>{
+      itemsWithoutImage[index]={
+        name: item.name,
+        color: item.color, 
+        size: item.size,
+        price: item.price
+      }
+    });
+    console.log(purchaseDetails);
+  },[])
+
   useEffect(() => {
     calculatePrice(basketItems);
   }, []);
